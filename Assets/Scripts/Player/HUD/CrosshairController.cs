@@ -1,48 +1,55 @@
 using System.Collections;
 using UnityEngine;
 
-public enum CrosshairScale { Default, Cast };
-
-public class CrosshairController : MonoBehaviour
+namespace Player.HUD
 {
-    [SerializeField] private Vector3 defaultScale = new(0.01f, 0.01f, 0.01f);
-    [SerializeField] private Vector3 castScale = new(0.02f, 0.02f, 0.02f);
-    [SerializeField] private float scaleSpeed = 2f;
-    
-    private CrosshairScale currentScale;
-
-    private void Start()
+    public enum CrosshairScale
     {
-        transform.localScale = defaultScale;
-        currentScale = CrosshairScale.Default;
+        Default,
+        Cast
     }
 
-    private void Update()
+    public class CrosshairController : MonoBehaviour
     {
-        var newScale = currentScale switch
+        [SerializeField] private Vector3 defaultScale = new(0.01f, 0.01f, 0.01f);
+        [SerializeField] private Vector3 castScale = new(0.02f, 0.02f, 0.02f);
+        [SerializeField] private float scaleSpeed = 2f;
+
+        private CrosshairScale currentScale;
+
+        private void Start()
         {
-            CrosshairScale.Cast => castScale,
-            _ => defaultScale
-        };
-        
-        transform.localScale = Vector3.Lerp(transform.localScale, newScale, scaleSpeed * Time.deltaTime);
-    }
+            transform.localScale = defaultScale;
+            currentScale = CrosshairScale.Default;
+        }
 
-    public void SetScale(CrosshairScale scale)
-    {
-        currentScale = scale;
-    }
+        private void Update()
+        {
+            var newScale = currentScale switch
+            {
+                CrosshairScale.Cast => castScale,
+                _ => defaultScale
+            };
 
-    public void SetScale(CrosshairScale scale, float duration)
-    {
-        if (!isActiveAndEnabled) return;
-        currentScale = scale;
-        StartCoroutine(ResetCrosshair(duration));
-    }
+            transform.localScale = Vector3.Lerp(transform.localScale, newScale, scaleSpeed * Time.deltaTime);
+        }
 
-    private IEnumerator ResetCrosshair(float duration)
-    {
-        yield return new WaitForSeconds(duration);
-        currentScale = CrosshairScale.Default;
+        public void SetScale(CrosshairScale scale)
+        {
+            currentScale = scale;
+        }
+
+        public void SetScale(CrosshairScale scale, float duration)
+        {
+            if (!isActiveAndEnabled) return;
+            currentScale = scale;
+            StartCoroutine(ResetCrosshair(duration));
+        }
+
+        private IEnumerator ResetCrosshair(float duration)
+        {
+            yield return new WaitForSeconds(duration);
+            currentScale = CrosshairScale.Default;
+        }
     }
 }

@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 8476950733921838992}
   - component: {fileID: 3855369567346584780}
   - component: {fileID: 3969271537897965434}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,13 +133,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbe766be861a1f7458b7b5ab77d18513, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireballPrefab: {fileID: 5706598062022740202, guid: ca90645f355228e4d9589741179e936a, type: 3}
-  lightningPrefab: {fileID: 5729706380407031915, guid: efa9f805564243e49a7e2fc63b803bd4, type: 3}
+  primarySpellPrefab: {fileID: 5706598062022740202, guid: ca90645f355228e4d9589741179e936a, type: 3}
+  secondarySpellPrefab: {fileID: 5729706380407031915, guid: efa9f805564243e49a7e2fc63b803bd4, type: 3}
   spawnPoint: {fileID: 2131063486827149669}
+  primarySpellCooldown: 2
+  secondarySpellCooldown: 1
   playerCameraTransform: {fileID: 6901275991954353096}
   aimDistance: 100
-  fireballCooldown: 2
-  lightningCooldown: 1
   crosshair: {fileID: 308667897247900217}
   crosshairScaleDuration: 0.1
 --- !u!114 &8476950733921838992
@@ -196,7 +196,7 @@ GameObject:
   - component: {fileID: 6670052080097443766}
   - component: {fileID: 4701725673601086582}
   - component: {fileID: 347206298774697193}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: MaxHealthText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -330,7 +330,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2131063486827149669}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SpellSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -364,7 +364,7 @@ GameObject:
   - component: {fileID: 8010763744246293450}
   - component: {fileID: 3810209914528509103}
   - component: {fileID: 5212200371886208458}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: Shield
   m_TagString: Shield
   m_Icon: {fileID: 0}
@@ -472,7 +472,7 @@ GameObject:
   - component: {fileID: 7007113568767153078}
   - component: {fileID: 1562221911656565910}
   - component: {fileID: 3140983916698439900}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: HUD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -575,7 +575,7 @@ GameObject:
   - component: {fileID: 2369555219680607009}
   - component: {fileID: 911766633065537203}
   - component: {fileID: 4284044118848420369}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: /
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -712,7 +712,7 @@ GameObject:
   - component: {fileID: 2067683130514686001}
   - component: {fileID: 5422708708751435484}
   - component: {fileID: 1350924881211411883}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -850,7 +850,7 @@ GameObject:
   - component: {fileID: 1823092464914256802}
   - component: {fileID: 287050900732494622}
   - component: {fileID: 308667897247900217}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Crosshair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -951,7 +951,7 @@ GameObject:
   - component: {fileID: 4563913146651812245}
   - component: {fileID: 3212713923130038427}
   - component: {fileID: 1473721293185697959}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: CurrentHealthText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1088,7 +1088,7 @@ GameObject:
   - component: {fileID: 502954241004394868}
   - component: {fileID: 8254691140203772212}
   - component: {fileID: 437898836977409891}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlayerModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}

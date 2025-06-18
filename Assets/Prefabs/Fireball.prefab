@@ -153,7 +153,7 @@ MonoBehaviour:
   lifetime: 2
   hitLayer:
     serializedVersion: 2
-    m_Bits: 200
+    m_Bits: 968
   raycastLookAheadDistance: 0.2
   damageAmount: 50
   impactEffectPrefab: {fileID: 8861781591634406980, guid: 9d499ed83c2b0954f8ee5785ae6c4a1b, type: 3}

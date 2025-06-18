@@ -1,17 +1,21 @@
+using Player.HUD;
 using UnityEngine;
 
-public class PlayerHealth : Health
+namespace Player.Health
 {
-    [SerializeField] private PlayerHUD hud;
-    
-    private void Start()
+    public class PlayerHealth : global::Health.HealthScripts.Health
     {
-        hud.UpdateHealth(currentHealth, maxHealth.GetMaxHealth());
-    }
-    
-    public override void TakeDamage(float amount)
-    {
-        base.TakeDamage(amount);
-        hud.UpdateHealth(currentHealth, maxHealth.GetMaxHealth());
+        [SerializeField] private PlayerHUD hud;
+
+        private void Start()
+        {
+            hud.UpdateHealth(currentHealth, maxHealth.GetMaxHealth());
+        }
+
+        public override void TakeDamage(float amount)
+        {
+            base.TakeDamage(amount);
+            hud.UpdateHealth(currentHealth, maxHealth.GetMaxHealth());
+        }
     }
 }

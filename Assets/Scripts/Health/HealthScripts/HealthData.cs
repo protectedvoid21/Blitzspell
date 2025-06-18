@@ -1,12 +1,15 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "HealthData", menuName = "Scriptable Objects/HealthData")]
-public class HealthData : ScriptableObject
+namespace Health.HealthScripts
 {
-    [SerializeField] private float maxHealth;
-
-    public float GetMaxHealth()
+    [CreateAssetMenu(fileName = "HealthData", menuName = "Scriptable Objects/HealthData")]
+    public class HealthData : ScriptableObject
     {
-        return maxHealth;
+        [SerializeField] private float maxHealth;
+
+        public float GetMaxHealth()
+        {
+            return maxHealth;
+        }
     }
 }

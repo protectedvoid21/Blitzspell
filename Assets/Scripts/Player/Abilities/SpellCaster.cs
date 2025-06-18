@@ -1,152 +1,91 @@
+using Entities.Attacks;
+using Player.HUD;
 using UnityEngine;
 
-public class SpellCaster : MonoBehaviour
+namespace Player.Abilities
 {
-    [Header("Prefabs")]
-    [SerializeField] private GameObject fireballPrefab;
-    [SerializeField] private GameObject lightningPrefab;
-    
-    [Header("Spawn Point and Camera Transform")]
-    [SerializeField] private Transform spawnPoint;
-    [SerializeField] private Transform playerCameraTransform;
-    [SerializeField] private float aimDistance = 100f; // Dystans do punktu celowania od kamery
-    
-    [Header("Cooldowns")]
-    [SerializeField] private float fireballCooldown = 2.0f;
-    [SerializeField] private float lightningCooldown = 1.0f;
-    
-    [Header("Crosshair")]
-    [SerializeField] private CrosshairController crosshair;
-    [SerializeField] private float crosshairScaleDuration = 0.1f;
-
-    private bool castPrimaryAttack;
-    private bool castSecondaryAttack;
-    
-    private float lastFireballCastTime = -Mathf.Infinity;
-    private float lastLightningCastTime = -Mathf.Infinity;
-    private void Update()
+    public class SpellCaster : BaseSpellCaster
     {
-        // Przykład: Rzuć zaklęcie po kliknięciu lewego przycisku myszy (sterowane przez InputManager)
-        if (castPrimaryAttack)
-        {
-            CastFireball();
-            castPrimaryAttack = false;
-        }
-        else if (castSecondaryAttack)
-        {
-            CastLightning();
-            castSecondaryAttack = false;
-        }
-    }
+        [Header("Player Specific Settings")]
+        [SerializeField] private Transform playerCameraTransform;
 
-    private void CastFireball()
-    {
-        if (!fireballPrefab || !spawnPoint || !playerCameraTransform)
+        [SerializeField] private float aimDistance = 100f; // Dystans do punktu celowania od kamery
+
+        [Header("Crosshair")]
+        [SerializeField] private CrosshairController crosshair;
+        [SerializeField] private float crosshairScaleDuration = 0.1f;
+
+        private bool castPrimaryInputReceived;
+        private bool castSecondaryInputReceived;
+
+        private void Update()
         {
-            Debug.LogError("Fireball Prefab, Spawn Point, or Player Camera Transform not set on " + gameObject.name);
-            return;
+            if (castPrimaryInputReceived)
+            {
+                CastPrimarySpell();
+                castPrimaryInputReceived = false;
+            }
+            else if (castSecondaryInputReceived)
+            {
+                CastSecondarySpell();
+                castSecondaryInputReceived = false;
+            }
         }
 
-        var castDirection = GetTargetDirection();
-        
-        // Utwórz instancję prefabrykatu kuli ognia w miejscu spawnPoint
-        var fireballGo = Instantiate(fireballPrefab, spawnPoint.position, Quaternion.identity);
+        protected override void CastPrimarySpell()
+        {
+            // Przypisanie prefabów w Inspectorze będzie teraz "Primary Spell Prefab" zamiast "Fireball Prefab"
+            PerformSpellCast(primarySpellPrefab, ref lastPrimarySpellCastTime, primarySpellCooldown);
+            if (crosshair) crosshair.SetScale(CrosshairScale.Cast, crosshairScaleDuration);
+        }
 
-        // Pobierz komponent Fireball ze stworzonego obiektu
-        var fireballScript = fireballGo.GetComponent<Projectile>();
+        protected override void CastSecondarySpell()
+        {
+            // Przypisanie prefabów w Inspectorze będzie teraz "Secondary Spell Prefab" zamiast "Lightning Prefab"
+            PerformSpellCast(secondarySpellPrefab, ref lastSecondarySpellCastTime, secondarySpellCooldown);
+            if (crosshair) crosshair.SetScale(CrosshairScale.Cast, crosshairScaleDuration);
+        }
 
-        if (fireballScript)
+        protected override Vector3 GetTargetDirection()
         {
-            // Ustaw obliczony kierunek dla kuli ognia
-            fireballScript.SetDirection(castDirection);
-        }
-        else
-        {
-            Debug.LogError("Prefab assigned to fireballPrefab does not have a FireballProjectile script.");
-        }
-        
-        lastFireballCastTime = Time.time;
-        crosshair.SetScale(CrosshairScale.Cast, 0.2f);
-    }
-    
-    private void CastLightning()
-    {
-        if (!lightningPrefab || !spawnPoint || !playerCameraTransform)
-        {
-            Debug.LogError("Lightning Prefab, Spawn Point, or Player Camera Transform not set on " + gameObject.name);
-            return;
-        }
-        
-        var castDirection = GetTargetDirection();
-        
-        // Utwórz instancję prefabrykatu kuli ognia w miejscu spawnPoint
-        var lightningGo = Instantiate(lightningPrefab, spawnPoint.position, Quaternion.identity);
+            if (!playerCameraTransform)
+            {
+                Debug.LogError("Player Camera Transform not set on " + gameObject.name);
+                return Vector3.forward; // Zwróć domyślny kierunek, aby uniknąć błędu
+            }
 
-        // Pobierz komponent Fireball ze stworzonego obiektu
-        var lightningScript = lightningGo.GetComponent<Projectile>();
+            Vector3 targetPoint;
+            var ray = new Ray(playerCameraTransform.position, playerCameraTransform.forward);
 
-        if (lightningScript)
-        {
-            // Ustaw obliczony kierunek dla kuli ognia
-            lightningScript.SetDirection(castDirection);
+            if (Physics.Raycast(ray, out var hitInfo, Mathf.Infinity,
+                    LayerMask.GetMask("Entity", "Environment", "Ground", "Default", "Enemy")))
+                targetPoint = hitInfo.point;
+            else
+                targetPoint = playerCameraTransform.position + playerCameraTransform.forward * aimDistance;
+            return (targetPoint - spawnPoint.position).normalized;
         }
-        else
-        {
-            Debug.LogError("Prefab assigned to fireballPrefab does not have a FireballProjectile script.");
-        }
-        
-        lastLightningCastTime = Time.time;
-        crosshair.SetScale(CrosshairScale.Cast, crosshairScaleDuration);
-    }
 
-    private Vector3 GetTargetDirection()
-    {
-        // 1. Określ "punkt celowania" w świecie 3D.
-        // Robimy to, rzutując Ray z kamery przez środek ekranu (lub po prostu używając kierunku kamery)
-        // i biorąc punkt daleko w tym kierunku.
-        Vector3 targetPoint;
-        // Możesz też użyć Raycasta z kamery, żeby trafić w rzeczywisty obiekt pod celownikiem
-        
-        var ray = new Ray(playerCameraTransform.position, playerCameraTransform.forward);
-        // Sprawdź warstwy, w które może trafiać Raycast celowania, np. te same co pocisk + Default
-        if (Physics.Raycast(ray, out var hitInfo, Mathf.Infinity, LayerMask.GetMask("Entity", "Environment", "Ground", "Default"))) // Użyj odpowiednich warstw
+        // Metoda wywoływana przez InputManager
+        public void OnPrimarySpellCast()
         {
-            // Jeśli raycast trafił, punktem celowania jest miejsce trafienia
-            targetPoint = hitInfo.point;
-        }
-        else
-        {
-            // Najprostsza metoda to wzięcie punktu daleko od kamery w jej kierunku 'forward':
-            targetPoint = playerCameraTransform.position + playerCameraTransform.forward * aimDistance;
-        }
-        // Jeśli raycast nie trafił, używamy punktu daleko w przód kamery (jak wyżej)
-        // Logika powyżej już to obsługuje jako domyślny targetPoint.
-        
-        
-        // 2. Oblicz kierunek od spawnPoint do targetPoint
-        return (targetPoint - spawnPoint.position).normalized;
-    }
+            if (Time.time < lastPrimarySpellCastTime + primarySpellCooldown)
+            {
+                Debug.Log("Primary spell is on cooldown.");
+                return;
+            }
 
-    // Metoda wywoływana przez InputManager
-    public void OnPrimarySpellCast()
-    {
-        if (Time.time < lastFireballCastTime + fireballCooldown)
-        {
-            // Cooldown jeszcze trwa, nie można użyć fireball.
-            Debug.Log("Fireball is on cooldown.");
-            return;
+            castPrimaryInputReceived = true;
         }
-        castPrimaryAttack = true;
-    }
 
-    public void OnSecondarySpellCast()
-    {
-        if (Time.time < lastLightningCastTime + lightningCooldown)
+        public void OnSecondarySpellCast()
         {
-            // Cooldown jeszcze trwa, nie można użyć lightning.
-            Debug.Log("Lightning is on cooldown.");
-            return;
+            if (Time.time < lastSecondarySpellCastTime + secondarySpellCooldown)
+            {
+                Debug.Log("Secondary spell is on cooldown.");
+                return;
+            }
+
+            castSecondaryInputReceived = true;
         }
-        castSecondaryAttack = true;
     }
 }

@@ -2,14 +2,17 @@ using System.Globalization;
 using TMPro;
 using UnityEngine;
 
-public class PlayerHUD : MonoBehaviour
+namespace Player.HUD
 {
-    [SerializeField] private TextMeshProUGUI currentHealthText;
-    [SerializeField] private TextMeshProUGUI maxHealthText;
-
-    public void UpdateHealth(float currentHealth, float maxHealth)
+    public class PlayerHUD : MonoBehaviour
     {
-        currentHealthText.text = currentHealth.ToString(CultureInfo.InvariantCulture);
-        maxHealthText.text = maxHealth.ToString(CultureInfo.InvariantCulture);
+        [SerializeField] private TextMeshProUGUI currentHealthText;
+        [SerializeField] private TextMeshProUGUI maxHealthText;
+
+        public void UpdateHealth(float currentHealth, float maxHealth)
+        {
+            currentHealthText.text = currentHealth.ToString(CultureInfo.InvariantCulture);
+            maxHealthText.text = maxHealth.ToString(CultureInfo.InvariantCulture);
+        }
     }
 }

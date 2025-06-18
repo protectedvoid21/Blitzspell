@@ -1,73 +1,77 @@
+using Sound;
 using UnityEngine;
 
-public class PlayerMove : MonoBehaviour
+namespace Player.Controls
 {
-    [SerializeField] private CharacterController controller;
-    [SerializeField] private float moveSpeed = 10f;
-    [SerializeField] private float jumpHeight = 3.5f;
-    [SerializeField] private float gravity = -20f;
-    [SerializeField] private LayerMask groundMask;
-    [SerializeField] private float footstepsSpeed = 0.5f;
-
-    private Vector2 horizontal;
-    private bool isGrounded;
-    private bool jump;
-    private Vector3 verticalVelocity = Vector3.zero;
-    private bool playingFootsteps;
-
-    private void Update()
+    public class PlayerMove : MonoBehaviour
     {
-        isGrounded = Physics.CheckSphere(transform.position, 0.1f, groundMask);
-        if (isGrounded) verticalVelocity.y = 0f;
+        [SerializeField] private CharacterController controller;
+        [SerializeField] private float moveSpeed = 10f;
+        [SerializeField] private float jumpHeight = 3.5f;
+        [SerializeField] private float gravity = -20f;
+        [SerializeField] private LayerMask groundMask;
+        [SerializeField] private float footstepsSpeed = 0.5f;
 
-        var horizontalVelocity = (transform.right * horizontal.x + transform.forward * horizontal.y) * moveSpeed;
-        controller.Move(horizontalVelocity * Time.deltaTime);
+        private Vector2 horizontal;
+        private bool isGrounded;
+        private bool jump;
+        private bool playingFootsteps;
+        private Vector3 verticalVelocity = Vector3.zero;
 
-        if (jump)
+        private void Update()
         {
-            if (isGrounded) verticalVelocity.y = Mathf.Sqrt(-2f * jumpHeight * gravity);
-            jump = false;
+            isGrounded = Physics.CheckSphere(transform.position, 0.1f, groundMask);
+            if (isGrounded) verticalVelocity.y = 0f;
+
+            var horizontalVelocity = (transform.right * horizontal.x + transform.forward * horizontal.y) * moveSpeed;
+            controller.Move(horizontalVelocity * Time.deltaTime);
+
+            if (jump)
+            {
+                if (isGrounded) verticalVelocity.y = Mathf.Sqrt(-2f * jumpHeight * gravity);
+                jump = false;
+            }
+
+            verticalVelocity.y += gravity * Time.deltaTime;
+            controller.Move(verticalVelocity * Time.deltaTime);
+
+            switch (horizontalVelocity.magnitude)
+            {
+                case > 0f when !playingFootsteps && isGrounded:
+                    StartFootsteps();
+                    break;
+                case > 0f when !isGrounded:
+                case 0f:
+                    StopFootsteps();
+                    break;
+            }
         }
 
-        verticalVelocity.y += gravity * Time.deltaTime;
-        controller.Move(verticalVelocity * Time.deltaTime);
-
-        switch (horizontalVelocity.magnitude)
+        public void ReciveInput(Vector2 horizontalInput)
         {
-            case > 0f when !playingFootsteps && isGrounded:
-                StartFootsteps();
-                break;
-            case > 0f when !isGrounded:
-            case 0f:
-                StopFootsteps();
-                break;
+            horizontal = horizontalInput;
         }
-    }
 
-    public void ReciveInput(Vector2 horizontalInput)
-    {
-        horizontal = horizontalInput;
-    }
+        public void OnJumpPressed()
+        {
+            jump = true;
+        }
 
-    public void OnJumpPressed()
-    {
-        jump = true;
-    }
+        private void StartFootsteps()
+        {
+            playingFootsteps = true;
+            InvokeRepeating(nameof(PlayFootsteps), 0f, footstepsSpeed);
+        }
 
-    private void StartFootsteps()
-    {
-        playingFootsteps = true;
-        InvokeRepeating(nameof(PlayFootsteps), 0f, footstepsSpeed);
-    }
+        private void StopFootsteps()
+        {
+            playingFootsteps = false;
+            CancelInvoke(nameof(PlayFootsteps));
+        }
 
-    private void StopFootsteps()
-    {
-        playingFootsteps = false;
-        CancelInvoke(nameof(PlayFootsteps));
-    }
-    
-    private void PlayFootsteps()
-    {
-        SoundEffectManager.PlaySoundEffect("Player", true);
+        private void PlayFootsteps()
+        {
+            SoundEffectManager.PlaySoundEffect("Player", true);
+        }
     }
 }

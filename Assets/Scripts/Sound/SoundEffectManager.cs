@@ -1,43 +1,46 @@
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class SoundEffectManager : MonoBehaviour
+namespace Sound
 {
-    private static SoundEffectManager instance;
-    private static AudioSource audioSource;
-    private static AudioSource randomPitchAudioSource;
-    private static SoundEffectLibrary soundEffects;
-
-    private void Awake()
+    public class SoundEffectManager : MonoBehaviour
     {
-        if (!instance)
-        {
-            instance = this;
-            var audioSources = GetComponents<AudioSource>();
-            audioSource = audioSources[0];
-            randomPitchAudioSource = audioSources[1];
-            soundEffects = GetComponent<SoundEffectLibrary>();
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
+        private static SoundEffectManager instance;
+        private static AudioSource audioSource;
+        private static AudioSource randomPitchAudioSource;
+        private static SoundEffectLibrary soundEffects;
 
-    public static void PlaySoundEffect(string soundEffectName, bool randomizePitch = false)
-    {
-        var audioClip = soundEffects.GetRandomClip(soundEffectName);
-        if (!audioClip) return;
-        if (randomizePitch)
+        private void Awake()
         {
-            if (!randomPitchAudioSource) return;
-            randomPitchAudioSource.pitch = Random.Range(1f, 1.5f);
-            randomPitchAudioSource?.PlayOneShot(audioClip);
+            if (!instance)
+            {
+                instance = this;
+                var audioSources = GetComponents<AudioSource>();
+                audioSource = audioSources[0];
+                randomPitchAudioSource = audioSources[1];
+                soundEffects = GetComponent<SoundEffectLibrary>();
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
-        else
+
+        public static void PlaySoundEffect(string soundEffectName, bool randomizePitch = false)
         {
-            audioSource?.PlayOneShot(audioClip);
+            var audioClip = soundEffects.GetRandomClip(soundEffectName);
+            if (!audioClip) return;
+            if (randomizePitch)
+            {
+                if (!randomPitchAudioSource) return;
+                randomPitchAudioSource.pitch = Random.Range(1f, 1.5f);
+                randomPitchAudioSource?.PlayOneShot(audioClip);
+            }
+            else
+            {
+                audioSource?.PlayOneShot(audioClip);
+            }
         }
     }
 }
