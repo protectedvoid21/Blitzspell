@@ -1,26 +1,18 @@
 using System.Collections;
 using UnityEngine;
+using Menu.PauseMenu;
 
 namespace Player.Abilities
 {
     public class PlayerShield : MonoBehaviour
     {
-        [Header("Shield Settings")] [SerializeField]
-        private GameObject shield;
-
+        [Header("Shield Settings")]
+        [SerializeField] private GameObject shield;
         [SerializeField] private float shieldDeployTime = 0.5f;
         [SerializeField] private float shieldCooldown = 2.0f;
 
         private bool isShieldActive;
         private float lastShieldDeactivatedTime = -Mathf.Infinity;
-
-        // private void Update()
-        // {
-        //     if (isShieldActive)
-        //     {
-        //         DeployShield();
-        //     }
-        // }
 
         private void DeployShield()
         {
@@ -49,12 +41,13 @@ namespace Player.Abilities
 
         public void OnShieldActive()
         {
+            if (PauseScript.GetIsGamePaused()) return;
             // --- COOLDOWN ---
             // Sprawdź, czy minął wystarczający czas od ostatniej dezaktywacji tarczy
             if (Time.time < lastShieldDeactivatedTime + shieldCooldown)
             {
                 // Cooldown jeszcze trwa, nie można użyć tarczy.
-                Debug.Log("Shield is on cooldown."); // Opcjonalnie: komunikat debugujący lub UI feedback
+                Debug.Log("Shield is on cooldown.");
                 return; // Zakończ metodę, nie aktywuj tarczy
             }
 
@@ -70,7 +63,7 @@ namespace Player.Abilities
             }
             else
             {
-                Debug.Log("Shield is already active."); // Opcjonalnie: komunikat
+                Debug.Log("Shield is already active.");
             }
         }
     }

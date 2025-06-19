@@ -5,23 +5,19 @@ namespace Entities.Attacks
 {
     public class Projectile : MonoBehaviour
     {
-        [Header("Projectile Settings")] [SerializeField]
-        private float speed = 15.0f; // Prędkość kuli ognia
-
+        [Header("Projectile Settings")]
+        [SerializeField] private float speed = 15.0f; // Prędkość kuli ognia
         [SerializeField] private float lifetime = 5.0f; // Czas życia kuli ognia przed autodestrukcją
 
-        [Header("Collision Settings")] [SerializeField]
-        private LayerMask hitLayer; // Warstwy, z którymi kula ognia ma kolidować (Ustaw w Inspector!)
+        [Header("Collision Settings")]
+        [SerializeField] private LayerMask hitLayer; // Warstwy, z którymi kula ognia ma kolidować (Ustaw w Inspector!)
+        [SerializeField] private float raycastLookAheadDistance = 0.2f; // Dodatkowy dystans dla raycasta, aby wykryć obiekty tuż przed sobą
 
-        [SerializeField]
-        private float
-            raycastLookAheadDistance = 0.2f; // Dodatkowy dystans dla raycasta, aby wykryć obiekty tuż przed sobą
+        [Header("Damage Settings")]
+        [SerializeField] private float damageAmount = 20.0f; // Ilość zadawanych obrażeń
 
-        [Header("Damage Settings")] [SerializeField]
-        private float damageAmount = 20.0f; // Ilość zadawanych obrażeń
-
-        [Header("Effects")] [SerializeField]
-        private GameObject impactEffectPrefab; // Prefabrykat efektu po trafieniu (opcjonalne)
+        [Header("Effects")]
+        [SerializeField] private GameObject impactEffectPrefab; // Prefabrykat efektu po trafieniu (opcjonalne)
 
         private Vector3 direction; // Kierunek lotu kuli ognia
         private float timeSpawned; // Czas stworzenia pocisku, do obliczania czasu życia

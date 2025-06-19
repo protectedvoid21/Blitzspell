@@ -7,44 +7,48 @@ namespace Player.Controls
     {
         [SerializeField] private CharacterController controller;
         [SerializeField] private float moveSpeed = 10f;
-        [SerializeField] private float jumpHeight = 3.5f;
-        [SerializeField] private float gravity = -20f;
         [SerializeField] private LayerMask groundMask;
         [SerializeField] private float footstepsSpeed = 0.5f;
+        [SerializeField] private float groundCheckDistance = 0.15f;
 
         private Vector2 horizontal;
         private bool isGrounded;
-        private bool jump;
         private bool playingFootsteps;
-        private Vector3 verticalVelocity = Vector3.zero;
 
         private void Update()
         {
-            isGrounded = Physics.CheckSphere(transform.position, 0.1f, groundMask);
-            if (isGrounded) verticalVelocity.y = 0f;
-
-            var horizontalVelocity = (transform.right * horizontal.x + transform.forward * horizontal.y) * moveSpeed;
-            controller.Move(horizontalVelocity * Time.deltaTime);
-
-            if (jump)
+            isGrounded = Physics.Raycast(transform.position, Vector3.down, out var hit, groundCheckDistance, groundMask);
+            
+            var moveDirection = transform.right * horizontal.x + transform.forward * horizontal.y;
+            // Jeśli uderzyliśmy w ziemię i mamy normalną, dostosowujemy kierunek ruchu do powierzchni.
+            if (isGrounded && hit.normal != Vector3.zero)
             {
-                if (isGrounded) verticalVelocity.y = Mathf.Sqrt(-2f * jumpHeight * gravity);
-                jump = false;
+                // Projekcja kierunku ruchu na płaszczyznę ziemi
+                moveDirection = Vector3.ProjectOnPlane(moveDirection, hit.normal).normalized;
+            } else {
+                moveDirection = moveDirection.normalized;
             }
+            controller.Move(moveDirection * (moveSpeed * Time.deltaTime));
+            
+            if (!isGrounded)
+                controller.Move(Physics.gravity * Time.deltaTime);
 
-            verticalVelocity.y += gravity * Time.deltaTime;
-            controller.Move(verticalVelocity * Time.deltaTime);
-
-            switch (horizontalVelocity.magnitude)
+            switch (controller.velocity.magnitude)
             {
                 case > 0f when !playingFootsteps && isGrounded:
                     StartFootsteps();
                     break;
-                case > 0f when !isGrounded:
-                case 0f:
+                case > 0.1f when !isGrounded:
+                case <= 0.1f:
                     StopFootsteps();
                     break;
             }
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = isGrounded ? Color.green : Color.red;
+            Gizmos.DrawRay(transform.position, Vector3.down * groundCheckDistance);
         }
 
         public void ReciveInput(Vector2 horizontalInput)
@@ -52,17 +56,14 @@ namespace Player.Controls
             horizontal = horizontalInput;
         }
 
-        public void OnJumpPressed()
-        {
-            jump = true;
-        }
-
+        // ReSharper disable Unity.PerformanceAnalysis
         private void StartFootsteps()
         {
             playingFootsteps = true;
             InvokeRepeating(nameof(PlayFootsteps), 0f, footstepsSpeed);
         }
 
+        // ReSharper disable Unity.PerformanceAnalysis
         private void StopFootsteps()
         {
             playingFootsteps = false;
