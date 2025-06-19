@@ -1,4 +1,5 @@
 using UnityEngine;
+using Menu.PauseMenu;
 
 namespace Player.Controls
 {
@@ -19,6 +20,13 @@ namespace Player.Controls
 
         private void Update()
         {
+            if (PauseScript.GetIsGamePaused())
+            {
+                Cursor.lockState = CursorLockMode.None;
+                return;
+            }
+
+            Cursor.lockState = CursorLockMode.Locked;
             transform.Rotate(Vector3.up, mouseX * Time.deltaTime);
 
             xRotation -= mouseY;

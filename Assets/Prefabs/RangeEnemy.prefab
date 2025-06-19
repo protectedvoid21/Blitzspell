@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2522679516011044158}
   - component: {fileID: 7829055575344404550}
   m_Layer: 9
-  m_Name: Enemy_1
+  m_Name: RangeEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +78,7 @@ MonoBehaviour:
   secondarySpellCooldown: 1
   spellPrefabToUse: {fileID: 5706598062022740202, guid: ca90645f355228e4d9589741179e936a, type: 3}
   spellCooldown: 2
-  attackRange: 8
+  attackRange: 10
 --- !u!114 &2522679516011044158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 8057660558243270070}
   - component: {fileID: 672905128799330354}
   m_Layer: 9
-  m_Name: Enemy_1_model
+  m_Name: RangeEnemyModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -181,7 +181,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: c2e40fa84d53ccd428f640eac126b1fb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

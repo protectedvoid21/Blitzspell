@@ -1,5 +1,6 @@
 using Entities.Attacks;
 using Player.HUD;
+using Menu.PauseMenu;
 using UnityEngine;
 
 namespace Player.Abilities
@@ -68,6 +69,7 @@ namespace Player.Abilities
         // Metoda wywoływana przez InputManager
         public void OnPrimarySpellCast()
         {
+            if (PauseScript.GetIsGamePaused()) return;
             if (Time.time < lastPrimarySpellCastTime + primarySpellCooldown)
             {
                 Debug.Log("Primary spell is on cooldown.");
@@ -79,6 +81,7 @@ namespace Player.Abilities
 
         public void OnSecondarySpellCast()
         {
+            if (PauseScript.GetIsGamePaused()) return;
             if (Time.time < lastSecondarySpellCastTime + secondarySpellCooldown)
             {
                 Debug.Log("Secondary spell is on cooldown.");
