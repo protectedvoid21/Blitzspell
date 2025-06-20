@@ -15,7 +15,8 @@ namespace Entities.Enemy
         [SerializeField] private float arrivalThreshold = 0.6f;
 
         [Header("Detection Settings")]
-        [SerializeField] private LayerMask playerLayer; // Warstwa, na której znajduje się gracz
+        [SerializeField]
+        protected LayerMask playerLayer; // Warstwa, na której znajduje się gracz
 
         [SerializeField] private float viewRadius = 10f; // Promień widzenia
 
@@ -27,19 +28,19 @@ namespace Entities.Enemy
         [SerializeField] private float chaseSpeed = 4f;
         [SerializeField] private float attackRange = 10f; // Zasięg, w którym przeciwnik zaczyna atakować
 
-        private NavMeshAgent agent;
-        private int currentPatrolPointIndex;
+        protected NavMeshAgent agent;
+        protected int currentPatrolPointIndex;
 
-        private EnemyState currentState;
-        private EnemySpellCaster enemySpellCaster;
-        private bool isPlayerDetected;
-        private Vector3 originalPatrolPathCenter; // Punkt odniesienia dla powrotu do patrolowania
-        private Quaternion originalPatrolRotation; // Rotacja odniesienia dla powrotu do patrolowania
-        private Transform playerTarget;
-        private bool returningToPatrolPath;
-        private bool isWaitingAtPatrolPoint;
+        protected EnemyState currentState;
+        protected EnemySpellCaster enemySpellCaster;
+        protected bool isPlayerDetected;
+        protected Vector3 originalPatrolPathCenter; // Punkt odniesienia dla powrotu do patrolowania
+        protected Quaternion originalPatrolRotation; // Rotacja odniesienia dla powrotu do patrolowania
+        protected Transform playerTarget;
+        protected bool returningToPatrolPath;
+        protected bool isWaitingAtPatrolPoint;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             agent = GetComponent<NavMeshAgent>();
             enemySpellCaster = GetComponent<EnemySpellCaster>();
@@ -83,7 +84,7 @@ namespace Entities.Enemy
         }
 
         // Pomocnicza funkcja do wizualizacji stożka widzenia w edytorze
-        private void OnDrawGizmos()
+        protected virtual void OnDrawGizmos()
         {
             // Wizualizacja zasięgu widzenia
             Gizmos.color = Color.yellow;
@@ -218,7 +219,7 @@ namespace Entities.Enemy
             agent.isStopped = false; // Wznów ruch
         }
 
-        private void ChaseBehavior()
+        protected virtual void ChaseBehavior()
         {
             if (!playerTarget)
             {
@@ -241,7 +242,7 @@ namespace Entities.Enemy
             }
         }
 
-        private void AttackBehavior()
+        protected virtual void AttackBehavior()
         {
             if (!playerTarget)
             {
@@ -303,7 +304,7 @@ namespace Entities.Enemy
             }
         }
 
-        private enum EnemyState
+        protected enum EnemyState
         {
             Patrolling,
             Chasing,
