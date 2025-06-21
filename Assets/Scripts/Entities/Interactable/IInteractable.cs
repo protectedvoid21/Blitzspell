@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Player.Controls
+namespace Entities.Interactable
 {
     public interface IInteractable
     {

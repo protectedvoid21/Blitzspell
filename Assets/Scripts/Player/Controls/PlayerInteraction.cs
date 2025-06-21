@@ -1,4 +1,5 @@
 using UnityEngine;
+using Entities.Interactable;
 
 namespace Player.Controls
 {

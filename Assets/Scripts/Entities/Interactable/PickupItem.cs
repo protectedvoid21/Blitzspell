@@ -1,4 +1,4 @@
-using Player.Controls;
+using Entities.Interactable;
 using UnityEngine;
 
 namespace Entities.Interactable
@@ -10,7 +10,7 @@ namespace Entities.Interactable
         [Header("Interaction Prompt")]
         [SerializeField] private GameObject prompt; // Prefab tekstu 3D
 
-        public void Interact()
+        public virtual void Interact()
         {
             Debug.Log("Podniesiono: " + itemName + "!");
 
