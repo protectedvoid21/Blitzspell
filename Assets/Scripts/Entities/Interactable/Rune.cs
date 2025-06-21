@@ -1,3 +1,4 @@
+using Managers;
 using UnityEngine;
 
 namespace Entities.Interactable
@@ -7,6 +8,7 @@ namespace Entities.Interactable
         public override void Interact()
         {
             Debug.Log("Activate portal to next level");
+            Level1GameManager.RunePickedUp();
 
             Destroy(gameObject); // Usuń obiekt po podniesieniu
         }

@@ -63,7 +63,7 @@ namespace Health.HealthScripts
         }
 
         // Metoda obsługująca śmierć obiektu (PLACEHOLDER)
-        private void Die()
+        protected virtual void Die()
         {
             Debug.Log($"{gameObject.name} has died.");
 
