@@ -47,7 +47,7 @@ namespace Entities.Attacks
             {
                 // Trafiliśmy w coś!
                 Debug.Log(
-                    $"Fireball trafił w: {hit.collider.name} na warstwie: {LayerMask.LayerToName(hit.collider.gameObject.layer)}");
+                    $"Fireball hit: {hit.collider.name} on Layer: {LayerMask.LayerToName(hit.collider.gameObject.layer)}");
 
                 // Przesuń kulę ognia do punktu trafienia przed zniszczeniem/obsłużeniem kolizji
                 // hit.distance to dystans od początku raycasta do punktu trafienia.
@@ -107,9 +107,6 @@ namespace Entities.Attacks
         // Metoda do obsługi tego, co dzieje się po trafieniu (PLACEHOLDER)
         private void HandleHit(RaycastHit hit)
         {
-            Debug.Log(
-                $"Projectile trafił w: {hit.collider.name} na warstwie: {LayerMask.LayerToName(hit.collider.gameObject.layer)}");
-
             // --- NOWA LOGIKA BLOKOWANIA PRZEZ TARCZĘ ---
             // Sprawdź, czy trafiony obiekt (lub jego rodzic) ma tag "Shield".
             // Często tag ustawia się na głównym obiekcie tarczy, więc sprawdzamy bezpośrednio trafiony collider.

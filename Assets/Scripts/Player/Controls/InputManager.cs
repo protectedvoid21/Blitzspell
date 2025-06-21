@@ -10,6 +10,7 @@ namespace Player.Controls
         [SerializeField] private PlayerLook look;
         [SerializeField] private SpellCaster spellCaster;
         [SerializeField] private PlayerShield shield;
+        [SerializeField] private PlayerInteraction interaction;
         
         [SerializeField] private GameObject pauseMenu;
 
@@ -33,6 +34,7 @@ namespace Player.Controls
             player.Shield.performed += _ => shield.OnShieldActive();
             player.Pause.performed += _ => pause.Pause();
             player.Resume.performed += _ => pause.Resume();
+            player.Interact.performed += _ => interaction.OnInteractPerformed();
         }
 
         private void Update()
