@@ -1046,30 +1046,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 1083878923964755527, guid: 32cc2f6c0fdcdca4095db0718fb5090b, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0.00048828125
-      objectReference: {fileID: 0}
-    - target: {fileID: 1603037217813034431, guid: 32cc2f6c0fdcdca4095db0718fb5090b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1603037217813034431, guid: 32cc2f6c0fdcdca4095db0718fb5090b, type: 3}
+    - target: {fileID: 2369555219680607009, guid: 32cc2f6c0fdcdca4095db0718fb5090b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 170.09998
       objectReference: {fileID: 0}
-    - target: {fileID: 1603037217813034431, guid: 32cc2f6c0fdcdca4095db0718fb5090b, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2502522160349593157, guid: 32cc2f6c0fdcdca4095db0718fb5090b, type: 3}
-      propertyPath: pauseMenu
-      value: 
-      objectReference: {fileID: 1469427557}
-    - target: {fileID: 2502522160349593157, guid: 32cc2f6c0fdcdca4095db0718fb5090b, type: 3}
-      propertyPath: pausePanel
-      value: 
-      objectReference: {fileID: 1469427557}
     - target: {fileID: 4995773537020711135, guid: 32cc2f6c0fdcdca4095db0718fb5090b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -34.76518
@@ -1110,9 +1090,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7352375685428425757, guid: 32cc2f6c0fdcdca4095db0718fb5090b, type: 3}
-      propertyPath: groundCheckDistance
-      value: 0.15
+    - target: {fileID: 6670052080097443766, guid: 32cc2f6c0fdcdca4095db0718fb5090b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 182.40002
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3060,11 +3040,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d55a020479c56134281e08c473bc33bd, type: 3}
---- !u!1 &1469427557 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7620835160081847858, guid: 32cc2f6c0fdcdca4095db0718fb5090b, type: 3}
-  m_PrefabInstance: {fileID: 639580712}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1473840291
 PrefabInstance:
   m_ObjectHideFlags: 0
