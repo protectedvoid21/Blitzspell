@@ -199,10 +199,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3678274939854793435, guid: 0cc37b3b7a908424d802a3628c6ccab0, type: 3}
-      propertyPath: patrolPoints.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3678274939854793435, guid: 0cc37b3b7a908424d802a3628c6ccab0, type: 3}
       propertyPath: 'patrolPoints.Array.data[0]'
       value: 
       objectReference: {fileID: 201988430}
@@ -7936,10 +7932,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2522679516011044158, guid: 6a388903dcf98724ca7d70574c46fd0a, type: 3}
-      propertyPath: patrolPoints.Array.size
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 2522679516011044158, guid: 6a388903dcf98724ca7d70574c46fd0a, type: 3}
       propertyPath: 'patrolPoints.Array.data[0]'
       value: 
       objectReference: {fileID: 382879314}
@@ -7963,18 +7955,6 @@ PrefabInstance:
       propertyPath: 'patrolPoints.Array.data[5]'
       value: 
       objectReference: {fileID: 2086679159}
-    - target: {fileID: 2522679516011044158, guid: 6a388903dcf98724ca7d70574c46fd0a, type: 3}
-      propertyPath: 'patrolPoints.Array.data[6]'
-      value: 
-      objectReference: {fileID: 1878907822}
-    - target: {fileID: 2522679516011044158, guid: 6a388903dcf98724ca7d70574c46fd0a, type: 3}
-      propertyPath: 'patrolPoints.Array.data[7]'
-      value: 
-      objectReference: {fileID: 1107648437}
-    - target: {fileID: 2522679516011044158, guid: 6a388903dcf98724ca7d70574c46fd0a, type: 3}
-      propertyPath: 'patrolPoints.Array.data[8]'
-      value: 
-      objectReference: {fileID: 587011302}
     - target: {fileID: 5359844373860360953, guid: 6a388903dcf98724ca7d70574c46fd0a, type: 3}
       propertyPath: m_Name
       value: RangeEnemy
@@ -10133,10 +10113,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2522679516011044158, guid: 6a388903dcf98724ca7d70574c46fd0a, type: 3}
-      propertyPath: patrolPoints.Array.size
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 2522679516011044158, guid: 6a388903dcf98724ca7d70574c46fd0a, type: 3}
       propertyPath: 'patrolPoints.Array.data[0]'
       value: 
