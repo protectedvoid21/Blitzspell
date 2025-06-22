@@ -9,7 +9,7 @@ namespace Entities.Enemy
         {
             Debug.Log($"{gameObject.name} has died.");
             
-            Level1GameManager.TargetDied(transform.position, gameObject.name);
+            GameManager.TargetDied(transform.position, gameObject.name);
             
             Destroy(gameObject);
         }

@@ -129,5 +129,5 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 968
   raycastLookAheadDistance: 0.2
-  damageAmount: 20
+  damageAmount: 25
   impactEffectPrefab: {fileID: 0}

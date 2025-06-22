@@ -1,3 +1,4 @@
+using Managers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -41,7 +42,7 @@ namespace Entities.Interactable
         {
             if (isActive)
             {
-                SceneManager.LoadScene("Scenes/Level_2");
+                GameManager.OnPortalInteract();
             }
         }
 
