@@ -69,8 +69,13 @@ namespace Managers
             
             if (enemiesCount != 0 || portalsCount != 0) return;
             
-            Debug.Log(point);
-            rune.transform.position = name.Contains("Portal") ? point + Vector3.up * 1f : point;
+            if (name.Contains("Portal"))
+                rune.transform.position = point + Vector3.up * 1f;
+            else if (name.Contains("Boss"))
+                rune.transform.position = point + Vector3.up * -1f;
+            else
+                rune.transform.position = point;
+            // rune.transform.position = name.Contains("Portal") ? point + Vector3.up * 1f : point;
             rune.SetActive(true);
             Debug.Log("All targets destroyed! Rune activated.");
         }
